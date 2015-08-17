@@ -32,6 +32,24 @@ module R10K
 
         with_setting(:cachedir) { |value| R10K::Git::Cache.settings[:cache_root] = value }
 
+        with_setting(:user) do |value|
+          if Process::Sys.uid == 0
+            target_uid = Etc.getpwent(value).uid
+            Process::Sys.seteuid(target_uid)
+          else
+            logger.debug "An alternate user #{value} has been supplied but not running as root, ignoring user setting"
+          end
+        end
+
+        with_setting(:group) do |value|
+          if Process::Sys.gid == 0
+            target_gid = Etc.getpwent(value).gid
+            Process::Sys.setegid(target_gid)
+          else
+            logger.debug "An alternate group #{value} has been supplied but not running as root, ignoring group setting"
+          end
+        end
+
         with_setting(:git) { |value| GitInitializer.new(value).call }
         with_setting(:forge) { |value| ForgeInitializer.new(value).call }
       end

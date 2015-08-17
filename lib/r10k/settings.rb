@@ -58,6 +58,14 @@ module R10K
           :desc => "Where r10k should store cached Git repositories.",
         }),
 
+        Definition.new(:user, {
+          :desc => "The user r10k should switch to when running as root."
+        }),
+
+        Definition.new(:group, {
+          :desc => "The group r10k should switch to when running as root."
+        }),
+
         R10K::Settings.forge_settings,
 
         R10K::Settings.git_settings,
