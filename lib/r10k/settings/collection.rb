@@ -6,7 +6,7 @@ require 'r10k/errors'
 module R10K
   module Settings
 
-    # Define a group of settings, which can be single definitions or nested
+    # Define a named group of settings, which can be single definitions or nested
     # collections.
     class Collection
 
