@@ -6,6 +6,7 @@ module R10K
     require 'r10k/settings/mixin'
 
     require 'r10k/settings/collection'
+    require 'r10k/settings/map'
     require 'r10k/settings/definition'
 
     def self.git_settings
@@ -27,7 +28,12 @@ module R10K
         Definition.new(:private_key, {
           :desc => "The path to the SSH private key for Git SSH remotes.
                     Only used by the 'rugged' Git provider.",
-        })
+        }),
+
+        Definition.new(:repositories, {
+          :desc => "Repository specific configuration.",
+          :default => {},
+        }),
       ])
     end
 
